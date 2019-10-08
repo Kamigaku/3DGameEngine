@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DGameEngine", "3DGameEngine\3DGameEngine.csproj", "{B9B9E039-E0CA-45EE-B047-C8D56D371A6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Labyrinthe", "Labyrinthe\Labyrinthe.csproj", "{77A23C3D-B1CA-437C-A1DD-C84C82505060}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{39238D8F-0B52-486D-8033-3BAF0093B1ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9B9E039-E0CA-45EE-B047-C8D56D371A6E}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B9B9E039-E0CA-45EE-B047-C8D56D371A6E}.Debug|x86.ActiveCfg = Debug|x86
+		{B9B9E039-E0CA-45EE-B047-C8D56D371A6E}.Debug|x86.Build.0 = Debug|x86
+		{B9B9E039-E0CA-45EE-B047-C8D56D371A6E}.Release|Any CPU.ActiveCfg = Release|x86
+		{B9B9E039-E0CA-45EE-B047-C8D56D371A6E}.Release|x86.ActiveCfg = Release|x86
+		{B9B9E039-E0CA-45EE-B047-C8D56D371A6E}.Release|x86.Build.0 = Release|x86
+		{77A23C3D-B1CA-437C-A1DD-C84C82505060}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{77A23C3D-B1CA-437C-A1DD-C84C82505060}.Debug|x86.ActiveCfg = Debug|x86
+		{77A23C3D-B1CA-437C-A1DD-C84C82505060}.Debug|x86.Build.0 = Debug|x86
+		{77A23C3D-B1CA-437C-A1DD-C84C82505060}.Release|Any CPU.ActiveCfg = Release|x86
+		{77A23C3D-B1CA-437C-A1DD-C84C82505060}.Release|x86.ActiveCfg = Release|x86
+		{77A23C3D-B1CA-437C-A1DD-C84C82505060}.Release|x86.Build.0 = Release|x86
+		{39238D8F-0B52-486D-8033-3BAF0093B1ED}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{39238D8F-0B52-486D-8033-3BAF0093B1ED}.Debug|x86.ActiveCfg = Debug|x86
+		{39238D8F-0B52-486D-8033-3BAF0093B1ED}.Debug|x86.Build.0 = Debug|x86
+		{39238D8F-0B52-486D-8033-3BAF0093B1ED}.Release|Any CPU.ActiveCfg = Release|x86
+		{39238D8F-0B52-486D-8033-3BAF0093B1ED}.Release|x86.ActiveCfg = Release|x86
+		{39238D8F-0B52-486D-8033-3BAF0093B1ED}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F8801E5B-13C8-4DBA-8E7E-C8B4F1195DD4}
+	EndGlobalSection
+EndGlobal

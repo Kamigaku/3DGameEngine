@@ -37,8 +37,7 @@ namespace GameEngine.Entities
 
         public override void Update()
         {
-            Console.WriteLine("Update player " + _translationVector);
-            GetModel().Update();
+            base.Update();
         }
     }
 }

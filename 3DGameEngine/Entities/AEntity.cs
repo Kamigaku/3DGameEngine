@@ -32,6 +32,9 @@ namespace GameEngine.Entities
             return _model.GetPosition();
         }
 
-        public abstract void Update();
+        public virtual void Update()
+        {
+            _model.Update();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GameEngine.Model;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Entities
 {
@@ -24,12 +25,11 @@ namespace GameEngine.Entities
 
         public Vector3 GetPosition()
         {
-            return _model.GetPosition();
+            return _model.Position;
         }
 
-        public virtual void Update()
-        {
-            _model.Update();
-        }
+        public virtual void Update() {}
+
+        public virtual void Draw(GraphicsDevice graphicsDevice, BasicEffect effect) {}
     }
 }

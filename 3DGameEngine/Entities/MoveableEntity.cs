@@ -17,8 +17,8 @@ namespace GameEngine.Entities
         private float _entitySpeed;
         #endregion Member fields
 
-        public MoveableEntity(Vector3 position, float entitySpeed, GraphicsDevice graphicsDevice) : 
-            base(new Block(position, 1, 2, 0.5f, graphicsDevice))
+        public MoveableEntity(Vector3 position, float entitySpeed, GraphicsDevice graphicsDevice, Model3D model) : 
+            base(model)
         {
             _entitySpeed = entitySpeed;
             _translationVector = Vector3.Zero;

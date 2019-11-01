@@ -44,19 +44,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Camera\ACamera.cs" />
-    <Compile Include="Camera\FollowingCamera.cs" />
+    <Compile Include="Camera\FPSCamera.cs" />
     <Compile Include="Camera\PerspectiveCamera.cs" />
     <Compile Include="Entities\AEntity.cs" />
     <Compile Include="Entities\MoveableEntity.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Input\GameInput.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Model\Block.cs" />
     <Compile Include="Utilities\ArrayUtility.cs" />
+    <Compile Include="Utilities\VectorUtility.cs" />
     <Compile Include="Worker\AWorker.cs" />
     <Compile Include="Worker\GraphicsWorker.cs" />
     <Compile Include="Worker\PhysicsWorker.cs" />
     <Compile Include="Processor\InputProcessor.cs" />
-    <Compile Include="Model\Block.cs" />
     <Compile Include="Model\Model3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\GameScreen.cs" />

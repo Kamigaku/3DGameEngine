@@ -51,7 +51,6 @@ namespace GameEngine.Input
 
             foreach (Keys key in keyJustPressed)
             {
-                Console.WriteLine("[GameInput] Key down");
                 OnKeyDown?.Invoke(null, key);
             }
 

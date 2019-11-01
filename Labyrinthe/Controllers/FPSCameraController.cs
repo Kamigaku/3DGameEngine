@@ -11,70 +11,26 @@ using System.Threading.Tasks;
 
 namespace Labyrinthe.Controllers
 {
-    public class CameraController : InputProcessor
+    public class FPSCameraController : InputProcessor
     {
 
         #region Member fields
         private bool _moveCamera; // To remove later, only usefull because camera is automaticaly recentered
         private readonly ACamera _assignedCamera;
-        private Vector3 _translationVector;
         #endregion Member fields
 
         #region Constructor
-        public CameraController(ACamera camera)
+        public FPSCameraController(ACamera camera)
         {
             _assignedCamera = camera;
             _moveCamera = true;
-            _translationVector = Vector3.Zero;
         }
         #endregion Constructor
 
         #region Private methods
-        public void KeyDown(object sender, Keys key)
-        {
-            Console.WriteLine("[Camera controller] Key down");
-            /*switch (key)
-            {
-                case Keys.Z:
-                    _translationVector.Z += 1;
-                    break;
-                case Keys.S:
-                    _translationVector.Z += -1;
-                    break;
-                case Keys.Q:
-                    _translationVector.X += 1;
-                    break;
-                case Keys.D:
-                    _translationVector.X += -1;
-                    break;
-                case Keys.Escape:
-                    _moveCamera = !_moveCamera;
-                    break;
-            }
-            _assignedCamera.SetPositionTranslateVector(_translationVector);*/
-        }
+        public void KeyDown(object sender, Keys key) {}
 
-        public void KeyUp(object sender, Keys key)
-        {
-            /*switch (key)
-            {
-                case Keys.Z:
-                    _translationVector.Z -= 1;
-                    break;
-                case Keys.S:
-                    _translationVector.Z -= -1;
-                    break;
-                case Keys.Q:
-                    _translationVector.X -= 1;
-                    break;
-                case Keys.D:
-                    _translationVector.X -= -1;
-                    break;
-            }
-
-            _assignedCamera.SetPositionTranslateVector(_translationVector);
-            Console.WriteLine(_assignedCamera);*/
-        }
+        public void KeyUp(object sender, Keys key) {}
 
         public void KeyTyped(object sender, Keys key) {}
 
@@ -88,6 +44,7 @@ namespace Labyrinthe.Controllers
         {
             if (_moveCamera)
             {
+                //GameEngine.Logging.Logger.Log(GameEngine.Logging.Logger.LogLevel.DEBUG, "Mouse moved");
                 Vector2 vectorMousePosition = new Vector2(mouseState.X - (GameDatas.Width / 2),
                                                           mouseState.Y - (GameDatas.Height / 2));
                 _assignedCamera.SetCameraRotation(vectorMousePosition);

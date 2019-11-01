@@ -1,5 +1,6 @@
 ﻿using GameEngine.Controllers;
 using GameEngine.Entities;
+using Labyrinthe.Datas;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -25,7 +26,6 @@ namespace Labyrinthe.Controllers
 
         public void KeyDown(object sender, Keys key)
         {
-            Console.WriteLine("[Player controller] Key down");
             switch (key)
             {
                 case Keys.Z:

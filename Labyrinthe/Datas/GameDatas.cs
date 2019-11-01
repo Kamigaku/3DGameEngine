@@ -16,7 +16,6 @@ namespace Labyrinthe.Datas
 
         #region Controls
         public static GameInput Keyboard { get; private set; }
-        public static List<Model3D> Models { get; private set; }
         public static List<AEntity> Entities { get; private set; }
         public static ACamera MainCamera { get; set; }
         #endregion Controls
@@ -30,7 +29,6 @@ namespace Labyrinthe.Datas
         static GameDatas()
         {
             Keyboard = new GameInput();
-            Models = new List<Model3D>();
             Entities = new List<AEntity>();
             Width = 480;
             Height = 800;

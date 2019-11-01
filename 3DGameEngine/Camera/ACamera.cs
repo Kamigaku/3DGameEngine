@@ -14,11 +14,12 @@ namespace GameEngine.Camera
 
         #region Variables
         protected Vector3 camPosition;
-        protected Vector3 camRotation;
+        public Vector3 camRotation;
         protected Vector3 camTarget;
         protected float camSpeed;
+        protected Matrix projectionMatrix;
 
-        private Vector3 mouseRotationBuffer;
+        protected Vector3 mouseRotationBuffer;
         private Vector3 cameraPositionVector;
         private Vector3 cameraRotationVector;
         #endregion Variables
@@ -30,6 +31,29 @@ namespace GameEngine.Camera
             {
                 return Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
             }
+        }
+
+        public Matrix Projection 
+        {
+            get 
+            {
+                return projectionMatrix;
+            }
+        }
+
+        public Vector3 CameraRotationVector 
+        {
+            get { return cameraRotationVector; }
+        }
+
+        public Vector3 MouseRotationBuffer 
+        {
+            get { return mouseRotationBuffer; }
+        }
+
+        public Vector3 CameraTarget 
+        {
+            get { return camTarget; }
         }
         #endregion Properties
 
@@ -86,8 +110,6 @@ namespace GameEngine.Camera
                 camTarget = camPosition + lookAtOffset;
             }
         }
-
-        public virtual void Draw(BasicEffect basicEffect) {}
 
         public void SetPositionTranslateVector(Vector3 translationVector)
         {

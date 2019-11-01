@@ -12,34 +12,49 @@ namespace GameEngine.Model
     {
 
         protected Vector3 position;
+        protected Vector3 rotation;
         protected VertexPositionColor[] vertices;
         protected VertexBuffer vertexBuffer;
         protected IndexBuffer indexBuffer;
         protected Vector3 translationVector;
+        public Matrix transform;
 
-        public Vector3 GetPosition()
+        #region Properties
+
+        public Vector3 Position 
         {
-            return position;
+            get { return position; }
         }
+
+        public Vector3 Rotation 
+        {
+            get { return rotation; }
+            set { rotation = value; }
+        }
+        #endregion Properties
 
         public virtual void SetTranslationVector(Vector3 translationVector)
         {
             this.translationVector = translationVector;
         }
-        public virtual void SetPosition(Vector3 position) {}
+
+        public virtual void SetPosition(Vector3 position, Vector3 rotation)
+        {
+            this.position = position;
+            this.rotation = rotation;
+            if (rotation == Vector3.Zero)
+            {
+                transform = Matrix.CreateTranslation(position);
+            }
+            else
+            {
+                transform = Matrix.CreateRotationY(rotation.Y) * Matrix.CreateTranslation(position);
+            }
+        }
 
         public virtual void Update() {}
 
-
-        public virtual void Draw(GraphicsDevice graphicsDevice, Effect effect)
-        {
-            /*graphicsDevice.SetVertexBuffer(vertexBuffer);
-            foreach (EffectPass pass in effect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, indices.Length / 3);
-            }*/
-        }
+        public virtual void Draw(GraphicsDevice graphicsDevice, BasicEffect effect) {}
 
     }
 }

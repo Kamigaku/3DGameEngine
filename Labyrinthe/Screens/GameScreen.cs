@@ -4,6 +4,7 @@ using Labyrinthe.Controllers;
 using Labyrinthe.Datas;
 using Labyrinthe.Entities;
 using Labyrinthe.Loops;
+using Labyrinthe.Model;
 using Labyrinthe.Workers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,14 +37,16 @@ namespace Labyrinthe.Screens
         {
             base.Initialize();
             _graphicsWorker.Initialize();
-            GameDatas.MainCamera = new PerspectiveCamera(GraphicsDevice, Vector3.Zero, new Vector3(0, 0, -10f), 5f);
-            AddInputProcessor(new CameraController(GameDatas.MainCamera));
-            GameDatas.Models.Add(new Block(1, 0, 1, 1, 1, 1, GraphicsDevice)); // va disparaitre plus tard
+            //GameDatas.Models.Add(new Block(new Vector3(1, 0, 0), new Vector3(0, 0, 0), 1, 3, 1, GraphicsDevice)); // va disparaitre plus tard
+            Blob bloc = new Blob(new Vector3(0, 0, 5), Vector3.Zero, 0, GraphicsDevice);
+            GameDatas.Entities.Add(bloc);
 
-            Player mainPlayer = new Player(new Vector3(0, 0, -5), 0.05f, GraphicsDevice);
+            Player mainPlayer = new Player(Vector3.Zero, Vector3.Zero, 0.05f, GraphicsDevice);
             GameDatas.Entities.Add(mainPlayer);
             AddInputProcessor(new PlayerController(mainPlayer));
 
+            GameDatas.MainCamera = new FPSCamera(GraphicsDevice, mainPlayer);
+            AddInputProcessor(new FPSCameraController(GameDatas.MainCamera));
 
             //new Labyrinthe.World.World();
         }

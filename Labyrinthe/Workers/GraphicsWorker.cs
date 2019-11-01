@@ -43,10 +43,9 @@ namespace Labyrinthe.Loops
         {
             base.Draw();
             _graphicDevice.Clear(Color.CornflowerBlue);
-            GameDatas.MainCamera?.Draw(_basicEffect);
-            for(int i = 0; i < GameDatas.Models.Count; i++)
+            for(int i = 0; i < GameDatas.Entities.Count; i++)
             {
-                GameDatas.Models[i].Draw(_graphicDevice, _basicEffect);
+                GameDatas.Entities[i].Draw(_graphicDevice, _basicEffect);
             }
         }
         #endregion Public methods

@@ -28,7 +28,6 @@ namespace Labyrinthe.Loops
         public override void Initialize()
         {
             base.Initialize();
-
             Microsoft.Xna.Framework.Input.Mouse.SetPosition(GameDatas.Width / 2, GameDatas.Height / 2);
         }
 

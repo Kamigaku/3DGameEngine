@@ -11,6 +11,10 @@ namespace GameEngine.Entities
         private Model3D _model;
         #endregion Member fields
 
+        #region Properties
+
+        #endregion Properties
+
         #region Constructor
         public AEntity(Model3D model)
         {

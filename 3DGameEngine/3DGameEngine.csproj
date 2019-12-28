@@ -53,6 +53,7 @@
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Model\Block.cs" />
     <Compile Include="Utilities\ArrayUtility.cs" />
+    <Compile Include="Utilities\QuaternionUtility.cs" />
     <Compile Include="Utilities\VectorUtility.cs" />
     <Compile Include="Worker\AWorker.cs" />
     <Compile Include="Worker\GraphicsWorker.cs" />

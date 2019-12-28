@@ -22,7 +22,7 @@ namespace GameEngine.Logging
 
         public static void Log(LogLevel level, string message, [CallerMemberName] string callerName = "")
         {
-            string msg = "[Thread n°" + Thread.CurrentThread.ManagedThreadId + " - " + callerName + "] : " + message;
+            string msg = level.ToString() + " - [Thread n°" + Thread.CurrentThread.ManagedThreadId + " - " + callerName + "] : " + message;
             Console.WriteLine(msg);
         }
 

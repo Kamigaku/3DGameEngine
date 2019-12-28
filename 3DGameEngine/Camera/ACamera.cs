@@ -13,15 +13,13 @@ namespace GameEngine.Camera
     {
 
         #region Variables
+        protected Vector3 camUp;
         protected Vector3 camPosition;
-        public Vector3 camRotation;
-        protected Vector3 camTarget;
+        public Vector3 camTarget; // for testing purpose, it has been set to public
         protected float camSpeed;
-        protected Matrix projectionMatrix;
-
-        protected Vector3 mouseRotationBuffer;
-        private Vector3 cameraPositionVector;
-        private Vector3 cameraRotationVector;
+        private Matrix _projectionMatrix;
+        private Vector3 _cameraPositionVector;
+        private Vector3 _cameraRotationVector;
         #endregion Variables
 
         #region Properties
@@ -29,43 +27,39 @@ namespace GameEngine.Camera
         {
             get 
             {
-                return Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
+                return Matrix.CreateLookAt(camPosition, CameraDirection, camUp);
             }
         }
-
         public Matrix Projection 
         {
             get 
             {
-                return projectionMatrix;
+                return _projectionMatrix;
+            }
+            protected set 
+            {
+                _projectionMatrix = value;
             }
         }
-
         public Vector3 CameraRotationVector 
         {
-            get { return cameraRotationVector; }
+            get { return _cameraRotationVector; }
         }
-
-        public Vector3 MouseRotationBuffer 
+        public Vector3 CameraDirection 
         {
-            get { return mouseRotationBuffer; }
-        }
-
-        public Vector3 CameraTarget 
-        {
-            get { return camTarget; }
+            get { return camPosition + camTarget; }
         }
         #endregion Properties
 
-
         #region Constructor
-        protected ACamera(Vector3 target, Vector3 position, float speed)
+        protected ACamera(Vector3 target, Vector3 position, Vector3 up, float speed)
         {
             camTarget = target;
             camPosition = position;
+            camUp = up;
             camSpeed = speed;
-            cameraRotationVector = Vector3.Zero;
-            cameraPositionVector = Vector3.Zero;
+            _cameraRotationVector = Vector3.Zero;
+            _cameraPositionVector = Vector3.Zero;
         }
         #endregion Constructor
 
@@ -74,7 +68,7 @@ namespace GameEngine.Camera
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            bool updateFired = false;
+            /*bool updateFired = false;
             if (cameraPositionVector != Vector3.Zero)
             {
                 Matrix rotate = Matrix.CreateRotationY(camRotation.Y);
@@ -108,7 +102,7 @@ namespace GameEngine.Camera
                 Matrix rotationMatrix = Matrix.CreateRotationX(camRotation.X) * Matrix.CreateRotationY(camRotation.Y);
                 Vector3 lookAtOffset = Vector3.Transform(Vector3.UnitZ, rotationMatrix);
                 camTarget = camPosition + lookAtOffset;
-            }
+            }*/
         }
 
         public void SetPositionTranslateVector(Vector3 translationVector)
@@ -117,18 +111,18 @@ namespace GameEngine.Camera
             {
                 translationVector.Normalize();
             }
-            cameraPositionVector = translationVector * camSpeed;
+            _cameraPositionVector = translationVector * camSpeed;
         }
 
         public void SetCameraRotation(Vector2 axisRotation)
         {
-            // TODO: change the camSpeed to maybe something else ? camRotationSpeed ?
-            cameraRotationVector = new Vector3(axisRotation, 0f) * camSpeed * 3;
+            // TODO: change the constant value to something else
+            _cameraRotationVector = (MathHelper.PiOver4 / 150) * new Vector3(axisRotation, 0f);
         }
 
         public void Zoom(int amount)
         {
-            cameraPositionVector.Z = amount;
+            _cameraPositionVector.Z = amount;
         }
         #endregion Public methods
 

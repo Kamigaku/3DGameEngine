@@ -37,15 +37,15 @@ namespace Labyrinthe.Screens
         {
             base.Initialize();
             _graphicsWorker.Initialize();
-            //GameDatas.Models.Add(new Block(new Vector3(1, 0, 0), new Vector3(0, 0, 0), 1, 3, 1, GraphicsDevice)); // va disparaitre plus tard
-            Blob bloc = new Blob(new Vector3(0, 0, 5), Vector3.Zero, 0, GraphicsDevice);
-            GameDatas.Entities.Add(bloc);
 
-            Player mainPlayer = new Player(Vector3.Zero, Vector3.Zero, 0.05f, GraphicsDevice);
+            Blob bloc = new Blob(new Vector3(0, 0, 5), Vector3.Zero, 1f, 0, GraphicsDevice);
+            GameDatas.Entities.Add(bloc);
+            Player mainPlayer = new Player(Vector3.Zero, Vector3.Zero, 1f, 0.05f, GraphicsDevice);
             GameDatas.Entities.Add(mainPlayer);
-            AddInputProcessor(new PlayerController(mainPlayer));
 
             GameDatas.MainCamera = new FPSCamera(GraphicsDevice, mainPlayer);
+
+            AddInputProcessor(new PlayerController(mainPlayer));
             AddInputProcessor(new FPSCameraController(GameDatas.MainCamera));
 
             //new Labyrinthe.World.World();

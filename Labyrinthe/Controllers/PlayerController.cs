@@ -72,7 +72,13 @@ namespace Labyrinthe.Controllers
 
         public void MouseDragged(object sender, MouseState mouseState) {}
 
-        public void MouseMoved(object sender, MouseState mouseState) {}
+        public void MouseMoved(object sender, MouseState mouseState)
+        {
+            /*Vector2 vectorMousePosition = new Vector2(mouseState.X - (GameDatas.Width / 2),
+                                                          mouseState.Y - (GameDatas.Height / 2));
+            _assignedEntity.SetRotationVector(vectorMousePosition);*/
+
+        }
 
         public void MouseUp(object sender, MouseState mouseState) {}
 

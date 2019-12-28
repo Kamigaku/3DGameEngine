@@ -14,8 +14,8 @@ namespace Labyrinthe.Entities
     class Blob : MoveableEntity
     {
 
-        public Blob(Vector3 position, Vector3 rotation, float entitySpeed, GraphicsDevice graphicsDevice)
-                    : base(position, entitySpeed, graphicsDevice, new Block(position, rotation, 1, 1, 1, graphicsDevice))
+        public Blob(Vector3 position, Vector3 rotation, float scaling, float entitySpeed, GraphicsDevice graphicsDevice)
+                    : base(entitySpeed, new Block(position, rotation, 1, 1, 1, scaling, graphicsDevice))
         {
             //GameDatas.Models.Add(GetModel());
         }

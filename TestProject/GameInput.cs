@@ -49,14 +49,12 @@ namespace GameEngine.Input
             {
                 if (!_keypressed)
                 {
-                    Console.WriteLine(_iterUpdate + " - Right key pressed.");
                     _iterUpdate++;
                 }
                 _keypressed = true;
             }
             else if(_keypressed)
             {
-                Console.WriteLine("Released.");
                 _keypressed = false;
             }
 

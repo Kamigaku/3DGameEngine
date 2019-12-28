@@ -8,8 +8,7 @@ namespace Labyrinthe.Model
     public class Block : Model3D
     {
 
-        // BoundingBox 
-
+        // BoundingBox : not used for the moment
         private float _width;
         private float _height;
         private float _depth;
@@ -24,10 +23,10 @@ namespace Labyrinthe.Model
             4, 7, 6, 4, 6, 5 // back
         };
 
-        public Block(Vector3 position, Vector3 rotation, float width, float height, float depth, GraphicsDevice graphicsDevice)
+        public Block(Vector3 initialPosition, Vector3 initialRotation, float width, float height, float depth, float scaling, GraphicsDevice graphicsDevice)
         {
-            this.position = new Vector3(position.X, position.Y, position.Z);
-            this.rotation = rotation;
+            SetTransform(initialPosition, initialRotation, scaling);
+
             _width = width;
             _height = height;
             _depth = depth;
@@ -36,8 +35,7 @@ namespace Labyrinthe.Model
             indexBuffer = new IndexBuffer(graphicsDevice, IndexElementSize.ThirtyTwoBits, INDICES.Length, BufferUsage.WriteOnly);
 
             CreateBlock();
-            SetPosition(this.position, this.rotation);
-            SetTranslationVector(Vector3.Zero);
+
             indexBuffer.SetData(INDICES);
         }
 
@@ -45,31 +43,47 @@ namespace Labyrinthe.Model
         {
             vertices = new VertexPositionColor[]
             {
-                    new VertexPositionColor(new Vector3(-(_width / 2) + position.X,  (_height / 2) + position.Y, -(_depth / 2) + position.Z), Color.Red), // top left
-                    new VertexPositionColor(new Vector3(-(_width / 2) + position.X, -(_height / 2) + position.Y, -(_depth / 2) + position.Z), Color.Red), // bottom left
-                    new VertexPositionColor(new Vector3( (_width / 2) + position.X, -(_height / 2) + position.Y, -(_depth / 2) + position.Z), Color.Red), // bottom right
-                    new VertexPositionColor(new Vector3( (_width / 2) + position.X,  (_height / 2) + position.Y, -(_depth / 2) + position.Z), Color.Red), // top right
-                    new VertexPositionColor(new Vector3(-(_width / 2) + position.X,  (_height / 2) + position.Y,  (_depth / 2) + position.Z), Color.Green),
-                    new VertexPositionColor(new Vector3(-(_width / 2) + position.X, -(_height / 2) + position.Y,  (_depth / 2) + position.Z), Color.Green),
-                    new VertexPositionColor(new Vector3( (_width / 2) + position.X, -(_height / 2) + position.Y,  (_depth / 2) + position.Z), Color.Green),
-                    new VertexPositionColor(new Vector3( (_width / 2) + position.X,  (_height / 2) + position.Y,  (_depth / 2) + position.Z), Color.Green),
+                    new VertexPositionColor(new Vector3(-_width / 2,  _height / 2, -_depth / 2), Color.Red), // top left
+                    new VertexPositionColor(new Vector3(-_width / 2, -_height / 2, -_depth / 2), Color.Red), // bottom left
+                    new VertexPositionColor(new Vector3( _width / 2, -_height / 2, -_depth / 2), Color.Red), // bottom right
+                    new VertexPositionColor(new Vector3( _width / 2,  _height / 2, -_depth / 2), Color.Red), // top right
+                    new VertexPositionColor(new Vector3(-_width / 2,  _height / 2,  _depth / 2), Color.Green),
+                    new VertexPositionColor(new Vector3(-_width / 2, -_height / 2,  _depth / 2), Color.Green),
+                    new VertexPositionColor(new Vector3( _width / 2, -_height / 2,  _depth / 2), Color.Green),
+                    new VertexPositionColor(new Vector3( _width / 2,  _height / 2,  _depth / 2), Color.Green),
             };
             vertexBuffer.SetData(vertices);
         }
 
+        /// <summary>
+        /// Update fired from the <see cref="GameEngine.Worker.PhysicsWorker"/> logic.
+        /// </summary>
         public override void Update()
         {
-            if (translationVector != Vector3.Zero || rotation != Vector3.Zero) // a changer ici
+            if(rotationVector != Vector3.Zero)
             {
-                SetPosition(position + translationVector, rotation);
+                worldRotation *= Matrix.CreateFromYawPitchRoll(rotationVector.X, rotationVector.Y, rotationVector.Z);
             }
+
+            if(translationVector != Vector3.Zero)
+            {
+                worldPosition *= Matrix.CreateTranslation((translationVector.X * worldRotation.Left) 
+                                                          + (translationVector.Y * worldRotation.Up) 
+                                                          + (translationVector.Z * worldRotation.Forward));
+            }
+            GameEngine.Logging.Logger.Log(GameEngine.Logging.Logger.LogLevel.DEBUG, "Rot: " + worldRotation.Forward + " / Pos: " + worldPosition.Forward + " / World: " + World.Forward);
         }
 
+        /// <summary>
+        /// Draw fired from the <see cref="GameEngine.Worker.GraphicsWorker"/> logic.
+        /// </summary>
+        /// <param name="graphicsDevice">The graphic device that will render the model</param>
+        /// <param name="effect">The effect that will be used to render the model</param>
         public override void Draw(GraphicsDevice graphicsDevice, BasicEffect effect)
         {
             graphicsDevice.SetVertexBuffer(vertexBuffer);
             graphicsDevice.Indices = indexBuffer;
-            effect.World = transform;
+            effect.World = World;
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();

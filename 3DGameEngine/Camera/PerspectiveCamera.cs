@@ -12,10 +12,11 @@ namespace GameEngine.Camera
 {
     public class PerspectiveCamera : ACamera
     {
-        public PerspectiveCamera(GraphicsDevice graphicsDevice, Vector3 target, Vector3 position, float speed, float fov = 45f, float distanceView = 1000f, InputProcessor controller = null) 
-            : base(target, position, speed)
+        public PerspectiveCamera(GraphicsDevice graphicsDevice, Vector3 target, Vector3 position, Vector3 up, 
+                                 float speed, float fov = 45f, float distanceView = 1000f, InputProcessor controller = null) 
+                                : base(target, position, up, speed)
         {
-            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fov), graphicsDevice.DisplayMode.AspectRatio, 0.7f, distanceView);
+            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fov), graphicsDevice.DisplayMode.AspectRatio, 0.7f, distanceView);
         }
     }
 }

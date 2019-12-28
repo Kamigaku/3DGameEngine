@@ -2,6 +2,7 @@
 using GameEngine.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace GameEngine.Camera
 {
@@ -10,14 +11,19 @@ namespace GameEngine.Camera
 
         #region Member fields
         private IEntity _target;
+
+        private readonly float MAX_PITCH = MathHelper.PiOver4;
+        public float currentPitch = 0;
+        public float currentYaw = 0;
         #endregion Member fields
 
         #region Constructor
-        public FPSCamera(GraphicsDevice graphicsDevice, IEntity target, float fov = 45, float distanceView = 1000, 
-                               InputProcessor controller = null) : base(graphicsDevice, Vector3.Zero, Vector3.Zero, 5f, fov, distanceView, controller)
+        public FPSCamera(GraphicsDevice graphicsDevice, IEntity target, float fov = 45, float distanceView = 1000, InputProcessor controller = null) 
+                        : base(graphicsDevice, Vector3.Forward, target.GetPosition(), Vector3.Up, 5f, fov, distanceView, controller)
         {
             _target = target;
             camPosition = _target.GetPosition();
+            Logging.Logger.Log(Logging.Logger.LogLevel.DEBUG, "Camera position: " + camPosition + " / " + camTarget + " / " + camUp);
 
             // WIP
         }
@@ -27,31 +33,19 @@ namespace GameEngine.Camera
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            camPosition = _target.GetModel().transform.Translation;
-            //camPosition.Z -= 5;
-            //camPosition.Y += 2;
+            float pitchAngle = CameraRotationVector.Y;
+            currentYaw += CameraRotationVector.X;
 
-            if (CameraRotationVector != Vector3.Zero)
+            camTarget = Vector3.Transform(camTarget, Matrix.CreateFromAxisAngle(camUp, -CameraRotationVector.X));
+            if (Math.Abs(currentPitch + pitchAngle) < MAX_PITCH)
             {
-
-                mouseRotationBuffer.X -= 0.01f * CameraRotationVector.X * deltaTime;
-                mouseRotationBuffer.Y -= 0.01f * CameraRotationVector.Y * deltaTime;
-
-                if (mouseRotationBuffer.Y < MathHelper.ToRadians(-75.0f))
-                    mouseRotationBuffer.Y -= (mouseRotationBuffer.Y - MathHelper.ToRadians(-75.0f));
-                if (mouseRotationBuffer.Y > MathHelper.ToRadians(75.0f))
-                    mouseRotationBuffer.Y -= (mouseRotationBuffer.Y - MathHelper.ToRadians(75.0f));
-
-                camRotation = new Vector3(-MathHelper.Clamp(
-                                          mouseRotationBuffer.Y,
-                                          MathHelper.ToRadians(-75.0f),
-                                          MathHelper.ToRadians(75.0f)),
-                                          MathHelper.WrapAngle(mouseRotationBuffer.X),
-                                          0);
+                camTarget = Vector3.Transform(camTarget, Matrix.CreateFromAxisAngle(Vector3.Cross(camUp, camTarget), pitchAngle));
+                currentPitch += pitchAngle;
             }
-            Matrix rotationMatrix = Matrix.CreateRotationX(camRotation.X) * Matrix.CreateRotationY(camRotation.Y);
-            Vector3 lookAtOffset = Vector3.Transform(Vector3.UnitZ, rotationMatrix);
-            camTarget = camPosition + lookAtOffset;
+
+            camPosition = _target.GetPosition();
+            /*camPosition.Z -= 2;
+            camPosition.Y += 2;*/
         }
     }
 }

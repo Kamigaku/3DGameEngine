@@ -13,15 +13,15 @@ namespace GameEngine.Entities
     {
 
         #region Member fields
-        private Vector3 _translationVector;
+        private Vector3 _translationVector = Vector3.Zero;
+        private Vector3 _rotationVector = Vector3.Zero;
         private float _entitySpeed;
         #endregion Member fields
 
-        public MoveableEntity(Vector3 position, float entitySpeed, GraphicsDevice graphicsDevice, Model3D model) : 
+        public MoveableEntity(float entitySpeed, Model3D model) : 
             base(model)
         {
             _entitySpeed = entitySpeed;
-            _translationVector = Vector3.Zero;
         }
 
         public void SetTranslationVector(Vector3 translationVector)
@@ -32,7 +32,17 @@ namespace GameEngine.Entities
             }
             _translationVector = translationVector * _entitySpeed;
             GetModel().SetTranslationVector(_translationVector);
-            //_model.Translate(_translationVector);
+        }
+
+        public void SetRotationVector(Vector3 rotationVector)
+        {
+            _rotationVector = rotationVector;
+            GetModel().SetRotationVector(_rotationVector);
+        }
+
+        public void SetRotationVector(float yaw, float pitch, float roll)
+        {
+            SetRotationVector(new Vector3(yaw, pitch, roll));
         }
 
         public override void Update()

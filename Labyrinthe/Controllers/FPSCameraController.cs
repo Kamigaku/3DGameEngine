@@ -54,17 +54,14 @@ namespace Labyrinthe.Controllers
 
         public void MouseWheelUp(object sender, MouseState mouseState)
         {
-            //_translationVector.Z = -1f;
+            // Ne marche pas
             _assignedCamera.Zoom(-1);
-            //_assignedCamera.SetTranslationVector(_translationVector);
-            // appeler une méthode "zoom" plutot ? ou un boolean à true ?
         }
 
         public void MouseWheelDown(object sender, MouseState mouseState)
         {
+            // Ne marche pas
             _assignedCamera.Zoom(1);
-            //_translationVector.Z = 1f;
-            //_assignedCamera.SetTranslationVector(_translationVector);
         }
         #endregion Private methods
 

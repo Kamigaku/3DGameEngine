@@ -18,7 +18,6 @@ namespace GameEngine.Camera
         public Vector3 camTarget; // for testing purpose, it has been set to public
         protected float camSpeed;
         private Matrix _projectionMatrix;
-        private Vector3 _cameraPositionVector;
         private Vector3 _cameraRotationVector;
         #endregion Variables
 
@@ -59,7 +58,6 @@ namespace GameEngine.Camera
             camUp = up;
             camSpeed = speed;
             _cameraRotationVector = Vector3.Zero;
-            _cameraPositionVector = Vector3.Zero;
         }
         #endregion Constructor
 
@@ -105,24 +103,10 @@ namespace GameEngine.Camera
             }*/
         }
 
-        public void SetPositionTranslateVector(Vector3 translationVector)
-        {
-            if (translationVector != Vector3.Zero)
-            {
-                translationVector.Normalize();
-            }
-            _cameraPositionVector = translationVector * camSpeed;
-        }
-
         public void SetCameraRotation(Vector2 axisRotation)
         {
             // TODO: change the constant value to something else
             _cameraRotationVector = (MathHelper.PiOver4 / 150) * new Vector3(axisRotation, 0f);
-        }
-
-        public void Zoom(int amount)
-        {
-            _cameraPositionVector.Z = amount;
         }
         #endregion Public methods
 

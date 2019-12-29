@@ -36,7 +36,7 @@ namespace GameEngine.Camera
             float pitchAngle = CameraRotationVector.Y;
             currentYaw += CameraRotationVector.X;
 
-            camTarget = Vector3.Transform(camTarget, Matrix.CreateFromAxisAngle(camUp, -CameraRotationVector.X));
+            camTarget = Vector3.Transform(camTarget, Matrix.CreateFromAxisAngle(camUp, -CameraRotationVector.X)); // Pas normal ?
             if (Math.Abs(currentPitch + pitchAngle) < MAX_PITCH)
             {
                 camTarget = Vector3.Transform(camTarget, Matrix.CreateFromAxisAngle(Vector3.Cross(camUp, camTarget), pitchAngle));

@@ -44,7 +44,6 @@ namespace Labyrinthe.Controllers
         {
             if (_moveCamera)
             {
-                //GameEngine.Logging.Logger.Log(GameEngine.Logging.Logger.LogLevel.DEBUG, "Mouse moved");
                 Vector2 vectorMousePosition = new Vector2(mouseState.X - (GameDatas.Width / 2),
                                                           mouseState.Y - (GameDatas.Height / 2));
                 _assignedCamera.SetCameraRotation(vectorMousePosition);
@@ -52,17 +51,9 @@ namespace Labyrinthe.Controllers
             }
         }
 
-        public void MouseWheelUp(object sender, MouseState mouseState)
-        {
-            // Ne marche pas
-            _assignedCamera.Zoom(-1);
-        }
+        public void MouseWheelUp(object sender, MouseState mouseState) {}
 
-        public void MouseWheelDown(object sender, MouseState mouseState)
-        {
-            // Ne marche pas
-            _assignedCamera.Zoom(1);
-        }
+        public void MouseWheelDown(object sender, MouseState mouseState) {}
         #endregion Private methods
 
     }

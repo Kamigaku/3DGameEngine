@@ -28,7 +28,8 @@ namespace Labyrinthe.Workers
             {
                 DateTime startTime = DateTime.Now;
 
-                for(int i = 0; i < GameDatas.Entities.Count; i++)
+                //GameDatas.MainCamera?.Update(gameTime);
+                for (int i = 0; i < GameDatas.Entities.Count; i++)
                 {
                     GameDatas.Entities[i].Update(/*gameTime.ElapsedGameTime.TotalSeconds*/);
                 }

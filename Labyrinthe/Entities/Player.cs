@@ -13,8 +13,6 @@ namespace Labyrinthe.Entities
     public class Player : MoveableEntity
     {
 
-        private float currentYaw;
-
         public Player(Vector3 position, Vector3 rotation, float scaling, float entitySpeed, GraphicsDevice graphicsDevice) 
             : base(entitySpeed, new Block(position, rotation, 1, 1, 1, scaling, graphicsDevice))
         {
@@ -22,13 +20,8 @@ namespace Labyrinthe.Entities
 
         public override void Update()
         {
+            SetRotationValues(new Vector3(0f, GameDatas.MainCamera.EulerAngles.Y, 0f));
             base.Update();
-
-
-            SetRotationVector(-(((FPSCamera)GameDatas.MainCamera).currentYaw - currentYaw), 0f, 0f);
-            currentYaw = ((FPSCamera)GameDatas.MainCamera).currentYaw;
-
-            GetModel().Update();
         }
 
         public override void Draw(GraphicsDevice graphicsDevice, BasicEffect effect)

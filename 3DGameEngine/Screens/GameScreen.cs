@@ -78,7 +78,7 @@ namespace GameEngine.Screens
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            //Console.WriteLine(gameTime.ElapsedGameTime.Milliseconds + "ms.");
+            //Console.WriteLine(gameTime.ElapsedGameTime.Ticks + "ms.");
             _input.Update();
             /*for(int i = 0; i < _workers.Count; i++)
             {

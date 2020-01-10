@@ -32,7 +32,10 @@ namespace GameEngine.Entities
             return _model.Position;
         }
 
-        public virtual void Update() {}
+        public virtual void Update() 
+        {
+            _model.Update();
+        }
 
         public virtual void Draw(GraphicsDevice graphicsDevice, BasicEffect effect) {}
     }

@@ -1,4 +1,5 @@
 ﻿using GameEngine.Logging;
+using GameEngine.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -20,6 +21,11 @@ namespace GameEngine.Model
         // Movement vectors
         protected Vector3 translationVector;
         protected Vector3 rotationVector;
+
+        // Angles
+        protected float yaw;
+        protected float pitch;
+        protected float roll;
 
         // Scaling
         protected float scaling;
@@ -53,35 +59,35 @@ namespace GameEngine.Model
         }
 
         /// <summary>
-        /// Set the vector that will update the rotation matrix of the model
+        /// Set the rotation vector that will be added to the yaw, pitch and roll values.
         /// </summary>
-        /// <param name="rotationVector">The vector representing the yaw, pitch and roll value</param>
+        /// <param name="rotationVector"></param>
         public virtual void SetRotationVector(Vector3 rotationVector)
         {
             this.rotationVector = rotationVector;
         }
 
         /// <summary>
-        /// Set angular values that will update the rotation matrix of the model
+        /// Set a new position of the model.
         /// </summary>
-        /// <param name="yaw">The yaw that will be added to the rotation matrix</param>
-        /// <param name="pitch">The pitch that will be added to the rotation matrix</param>
-        /// <param name="roll">The roll that will be added to the rotation matrix</param>
-        public virtual void SetRotationVector(float yaw, float pitch, float roll)
+        /// <param name="translationValues">The new position of the model</param>
+        public virtual void SetTranslationValues(Vector3 translationValues)
         {
-            SetRotationVector(new Vector3(yaw, pitch, roll));
+            worldPosition = Matrix.Identity * Matrix.CreateTranslation(translationValues);
         }
 
         /// <summary>
-        /// Change the translation and angular rotation of the model to a new one
+        /// Set the new rotation of the model.
         /// </summary>
-        /// <param name="newPosition">The new (x, y, z) position of the model</param>
-        /// <param name="yaw">The new yaw of the model</param>
-        /// <param name="pitch">The new pitch of the model</param>
-        /// <param name="roll">The new roll of the model</param>
-        public virtual void SetTransform(Vector3 newPosition, float yaw, float pitch, float roll, float scaling)
+        /// <param name="rotationValues">The rotation values of the model</param>
+        public virtual void SetRotationValues(Vector3 rotationValues)
         {
-            SetTransform(newPosition, new Vector3(yaw, pitch, roll), scaling);
+            yaw = rotationValues.Y;
+            pitch = rotationValues.X;
+            roll = rotationValues.Z;
+            worldRotation = Matrix.Identity * Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(yaw),
+                                                                            MathHelper.ToRadians(pitch),
+                                                                            MathHelper.ToRadians(roll));
         }
 
         /// <summary>
@@ -89,11 +95,12 @@ namespace GameEngine.Model
         /// </summary>
         /// <param name="newPosition">The new (x, y, z) position of the model</param>
         /// <param name="newRotation">The new (x, y, z) angular values of the model</param>
-        public virtual void SetTransform(Vector3 newPosition, Vector3 newRotation, float scaling)
+        /// <param name="newScaling">The new scaling value of the model</param>
+        public virtual void SetTransform(Vector3 newPosition, Vector3 newRotation, float newScaling)
         {
-            worldPosition = Matrix.Identity * Matrix.CreateTranslation(newPosition);
-            worldRotation = Matrix.Identity * Matrix.CreateFromYawPitchRoll(newRotation.X, newRotation.Y, newRotation.Z);
-            this.scaling = scaling;
+            SetTranslationValues(newPosition);
+            SetRotationValues(newRotation);
+            scaling = newScaling;
         }
 
         /// <summary>

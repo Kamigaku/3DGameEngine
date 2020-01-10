@@ -17,11 +17,12 @@ namespace Labyrinthe.Entities
         public Blob(Vector3 position, Vector3 rotation, float scaling, float entitySpeed, GraphicsDevice graphicsDevice)
                     : base(entitySpeed, new Block(position, rotation, 1, 1, 1, scaling, graphicsDevice))
         {
-            //GameDatas.Models.Add(GetModel());
         }
 
         public override void Update()
         {
+            //GetModel().SetRotationVector(new Vector3(0f, 1f, 0f));
+
             base.Update();
         }
 

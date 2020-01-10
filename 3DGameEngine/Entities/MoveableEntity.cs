@@ -13,8 +13,6 @@ namespace GameEngine.Entities
     {
 
         #region Member fields
-        private Vector3 _translationVector = Vector3.Zero;
-        private Vector3 _rotationVector = Vector3.Zero;
         private float _entitySpeed;
         #endregion Member fields
 
@@ -24,25 +22,34 @@ namespace GameEngine.Entities
             _entitySpeed = entitySpeed;
         }
 
+
         public void SetTranslationVector(Vector3 translationVector)
         {
             if (translationVector != Vector3.Zero)
             {
                 translationVector.Normalize();
             }
-            _translationVector = translationVector * _entitySpeed;
-            GetModel().SetTranslationVector(_translationVector);
+            GetModel().SetTranslationVector(translationVector * _entitySpeed);
         }
 
-        public void SetRotationVector(Vector3 rotationVector)
+        /// <summary>
+        /// Set the rotation vector with a Vector representing yaw, pitch and roll values
+        /// </summary>
+        /// <param name="rotationVector">The rotation's vector representing pitch, yaw and roll</param>
+        public void SetRotationValues(Vector3 rotationVector)
         {
-            _rotationVector = rotationVector;
-            GetModel().SetRotationVector(_rotationVector);
+            GetModel().SetRotationValues(rotationVector);
         }
 
-        public void SetRotationVector(float yaw, float pitch, float roll)
+        /// <summary>
+        /// Set the rotation vector with yaw, pitch and roll value
+        /// </summary>
+        /// <param name="yaw">The rotation around Y-axis</param>
+        /// <param name="pitch">The rotation around X-axis</param>
+        /// <param name="roll">The rotation around Z-axis</param>
+        public void SetRotationValues(float yaw, float pitch, float roll)
         {
-            SetRotationVector(new Vector3(yaw, pitch, roll));
+            SetRotationValues(new Vector3(yaw, pitch, roll));
         }
 
         public override void Update()

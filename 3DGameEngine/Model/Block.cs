@@ -47,18 +47,18 @@ namespace Labyrinthe.Model
             {
                 new VertexPositionColor(new Vector3(-_width / 2,  _height /2,  _depth / 2), Color.Green), // Front-top-left
                 new VertexPositionColor(new Vector3( _width / 2,  _height /2,  _depth / 2), Color.Green), // Front-top-right
-                new VertexPositionColor(new Vector3(-_width / 2, -_height /2,  _depth / 2), Color.Red), // Front-bottom-left
-                new VertexPositionColor(new Vector3( _width / 2, -_height /2,  _depth / 2), Color.Red), // Front-bottom-right
-                new VertexPositionColor(new Vector3( _width / 2, -_height /2, -_depth / 2), Color.Green), // Back-bottom-right
-                new VertexPositionColor(new Vector3( _width / 2,  _height /2,  _depth / 2), Color.Green), // Front-top-right
+                new VertexPositionColor(new Vector3(-_width / 2, -_height /2,  _depth / 2), Color.Green), // Front-bottom-left
+                new VertexPositionColor(new Vector3( _width / 2, -_height /2,  _depth / 2), Color.Green), // Front-bottom-right
+                new VertexPositionColor(new Vector3( _width / 2, -_height /2, -_depth / 2), Color.Red), // Back-bottom-right
+                new VertexPositionColor(new Vector3( _width / 2,  _height /2,  _depth / 2), Color.Red), // Front-top-right
                 new VertexPositionColor(new Vector3( _width / 2,  _height /2, -_depth / 2), Color.Red), // Back-top-right
                 new VertexPositionColor(new Vector3(-_width / 2,  _height /2,  _depth / 2), Color.Red), // Front-top-left
-                new VertexPositionColor(new Vector3(-_width / 2,  _height /2, -_depth / 2), Color.Green), // Back-top-left
-                new VertexPositionColor(new Vector3(-_width / 2, -_height /2,  _depth / 2), Color.Green), // Front-bottom-left
+                new VertexPositionColor(new Vector3(-_width / 2,  _height /2, -_depth / 2), Color.Red), // Back-top-left
+                new VertexPositionColor(new Vector3(-_width / 2, -_height /2,  _depth / 2), Color.Red), // Front-bottom-left
                 new VertexPositionColor(new Vector3(-_width / 2, -_height /2, -_depth / 2), Color.Red), // Back-bottom-left
                 new VertexPositionColor(new Vector3( _width / 2, -_height /2, -_depth / 2), Color.Red), // Back-bottom-right
-                new VertexPositionColor(new Vector3(-_width / 2,  _height /2, -_depth / 2), Color.Green), // Back-top-left
-                new VertexPositionColor(new Vector3( _width / 2,  _height /2, -_depth / 2), Color.Green)  // Back-top-right
+                new VertexPositionColor(new Vector3(-_width / 2,  _height /2, -_depth / 2), Color.Red), // Back-top-left
+                new VertexPositionColor(new Vector3( _width / 2,  _height /2, -_depth / 2), Color.Red)  // Back-top-right
             };
             vertexBuffer.SetData(_vertices);
         }
@@ -68,16 +68,20 @@ namespace Labyrinthe.Model
         /// </summary>
         public override void Update()
         {
+
             if(rotationVector != Vector3.Zero)
             {
-                worldRotation *= Matrix.CreateFromYawPitchRoll(rotationVector.X, rotationVector.Y, rotationVector.Z);
+                worldRotation *= Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(rotationVector.Y),
+                                                              MathHelper.ToRadians(rotationVector.X),
+                                                              MathHelper.ToRadians(rotationVector.Z));
             }
 
             if(translationVector != Vector3.Zero)
             {
-                worldPosition *= Matrix.CreateTranslation((translationVector.X * worldRotation.Right) 
-                                                          + (translationVector.Y * worldRotation.Up) 
-                                                          + (translationVector.Z * worldRotation.Forward));
+                worldPosition *= Matrix.CreateTranslation((translationVector.X * -worldRotation.Right) 
+                                                        + (translationVector.Y * worldRotation.Up) 
+                                                        + (translationVector.Z * -worldRotation.Forward));
+                
             }
         }
 
@@ -94,7 +98,6 @@ namespace Labyrinthe.Model
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                //graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, INDICES.Length / 3);
                 graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, _vertices, 0, _vertices.Length - 2);
             }
         }

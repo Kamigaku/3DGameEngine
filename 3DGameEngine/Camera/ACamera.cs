@@ -1,6 +1,7 @@
 ﻿using GameEngine.Controllers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using GameEngine.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,28 @@ namespace GameEngine.Camera
     {
 
         #region Variables
+
+        // Camera positionning
         protected Vector3 camUp;
         protected Vector3 camPosition;
-        public Vector3 camTarget; // for testing purpose, it has been set to public
-        protected float camSpeed;
+        protected Vector3 camTarget;
+
+        // Testing camera angles
+        private float _yaw; // Y
+        private float _pitch; // X
+        private float _roll; // Z
+
+        // Camera speeds
+        protected float camTranslationSpeed;
+        protected float camRotationSpeed;
+
+        // Camera matrix
         private Matrix _projectionMatrix;
-        private Vector3 _cameraRotationVector;
+
+        // Camera movements vectors
+        protected Vector3 cameraRotationVector;
+        protected Vector3 cameraTranslationVector;
+
         #endregion Variables
 
         #region Properties
@@ -26,7 +43,7 @@ namespace GameEngine.Camera
         {
             get 
             {
-                return Matrix.CreateLookAt(camPosition, CameraDirection, camUp);
+                return Matrix.CreateLookAt(camPosition, camPosition + camTarget, camUp);
             }
         }
         public Matrix Projection 
@@ -39,74 +56,46 @@ namespace GameEngine.Camera
             {
                 _projectionMatrix = value;
             }
-        }
-        public Vector3 CameraRotationVector 
+        }     
+        public Vector3 EulerAngles 
         {
-            get { return _cameraRotationVector; }
-        }
-        public Vector3 CameraDirection 
-        {
-            get { return camPosition + camTarget; }
+            get 
+            {
+                return new Vector3(_pitch, _yaw, _roll);
+            }
         }
         #endregion Properties
 
         #region Constructor
-        protected ACamera(Vector3 target, Vector3 position, Vector3 up, float speed)
+        protected ACamera(Vector3 target, Vector3 position, Vector3 up, float translationSpeed, float rotationSpeed)
         {
             camTarget = target;
             camPosition = position;
             camUp = up;
-            camSpeed = speed;
-            _cameraRotationVector = Vector3.Zero;
+            camTranslationSpeed = translationSpeed;
+            camRotationSpeed = rotationSpeed;
         }
         #endregion Constructor
 
         #region Public methods
         public virtual void Update(GameTime gameTime)
         {
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            /*bool updateFired = false;
-            if (cameraPositionVector != Vector3.Zero)
-            {
-                Matrix rotate = Matrix.CreateRotationY(camRotation.Y);
-                Vector3 movement = new Vector3(cameraPositionVector.X, cameraPositionVector.Y, cameraPositionVector.Z) * deltaTime;
-                camPosition += Vector3.Transform(movement, rotate);
-                updateFired = true;
-            }
-
-            if(cameraRotationVector != Vector3.Zero)
-            {
-
-                mouseRotationBuffer.X -= 0.01f * cameraRotationVector.X * deltaTime;
-                mouseRotationBuffer.Y -= 0.01f * cameraRotationVector.Y * deltaTime;
-
-                if (mouseRotationBuffer.Y < MathHelper.ToRadians(-75.0f))
-                    mouseRotationBuffer.Y -= (mouseRotationBuffer.Y - MathHelper.ToRadians(-75.0f));
-                if (mouseRotationBuffer.Y > MathHelper.ToRadians(75.0f))
-                    mouseRotationBuffer.Y -= (mouseRotationBuffer.Y - MathHelper.ToRadians(75.0f));
-
-                camRotation = new Vector3(-MathHelper.Clamp(
-                                            mouseRotationBuffer.Y,
-                                            MathHelper.ToRadians(-75.0f),
-                                            MathHelper.ToRadians(75.0f)),
-                                          MathHelper.WrapAngle(mouseRotationBuffer.X),
-                                          0);
-                updateFired = true;
-            }
-
-            if(updateFired)
-            {
-                Matrix rotationMatrix = Matrix.CreateRotationX(camRotation.X) * Matrix.CreateRotationY(camRotation.Y);
-                Vector3 lookAtOffset = Vector3.Transform(Vector3.UnitZ, rotationMatrix);
-                camTarget = camPosition + lookAtOffset;
-            }*/
+            camTarget = Vector3.Transform(Vector3.Forward, Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(_yaw),
+                                                                                         MathHelper.ToRadians(_pitch), 
+                                                                                         MathHelper.ToRadians(_roll)));
         }
 
-        public void SetCameraRotation(Vector2 axisRotation)
+        public void SetCameraRotation(Vector3 rotationVector)
         {
-            // TODO: change the constant value to something else
-            _cameraRotationVector = (MathHelper.PiOver4 / 150) * new Vector3(axisRotation, 0f);
+            cameraRotationVector = rotationVector * camRotationSpeed;
+            _yaw += cameraRotationVector.X;
+            _roll += cameraRotationVector.Z;
+            _pitch += cameraRotationVector.Y;
+        }
+
+        public void SetCameraTranslation(Vector3 translationVector)
+        {
+            cameraTranslationVector = translationVector * camTranslationSpeed;
         }
         #endregion Public methods
 

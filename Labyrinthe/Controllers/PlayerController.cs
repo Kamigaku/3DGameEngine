@@ -29,16 +29,16 @@ namespace Labyrinthe.Controllers
             switch (key)
             {
                 case Keys.Z:
-                    _translationVector.Z += 1;
-                    break;
-                case Keys.S:
                     _translationVector.Z -= 1;
                     break;
+                case Keys.S:
+                    _translationVector.Z += 1;
+                    break;
                 case Keys.Q:
-                    _translationVector.X -= 1;
+                    _translationVector.X += 1;
                     break;
                 case Keys.D:
-                    _translationVector.X += 1;
+                    _translationVector.X -= 1;
                     break;
             }
             _assignedEntity.SetTranslationVector(_translationVector);
@@ -49,19 +49,18 @@ namespace Labyrinthe.Controllers
             switch (key)
             {
                 case Keys.Z:
-                    _translationVector.Z -= 1;
-                    break;
-                case Keys.S:
                     _translationVector.Z += 1;
                     break;
-                case Keys.Q:
-                    _translationVector.X += 1;
+                case Keys.S:
+                    _translationVector.Z -= 1;
                     break;
-                case Keys.D:
+                case Keys.Q:
                     _translationVector.X -= 1;
                     break;
+                case Keys.D:
+                    _translationVector.X += 1;
+                    break;
             }
-
             _assignedEntity.SetTranslationVector(_translationVector);
         }
 

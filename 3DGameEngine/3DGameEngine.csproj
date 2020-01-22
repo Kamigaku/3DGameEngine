@@ -49,6 +49,7 @@
     <Compile Include="Entities\AEntity.cs" />
     <Compile Include="Entities\MoveableEntity.cs" />
     <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Geometry\Transform.cs" />
     <Compile Include="Input\GameInput.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Model\Block.cs" />

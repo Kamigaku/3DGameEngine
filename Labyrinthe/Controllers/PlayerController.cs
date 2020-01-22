@@ -29,10 +29,10 @@ namespace Labyrinthe.Controllers
             switch (key)
             {
                 case Keys.Z:
-                    _translationVector.Z -= 1;
+                    _translationVector.Z += 1;
                     break;
                 case Keys.S:
-                    _translationVector.Z += 1;
+                    _translationVector.Z -= 1;
                     break;
                 case Keys.Q:
                     _translationVector.X += 1;
@@ -49,10 +49,10 @@ namespace Labyrinthe.Controllers
             switch (key)
             {
                 case Keys.Z:
-                    _translationVector.Z += 1;
+                    _translationVector.Z -= 1;
                     break;
                 case Keys.S:
-                    _translationVector.Z -= 1;
+                    _translationVector.Z += 1;
                     break;
                 case Keys.Q:
                     _translationVector.X -= 1;

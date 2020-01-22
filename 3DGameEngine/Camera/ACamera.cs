@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameEngine.Geometry;
 
 namespace GameEngine.Camera
 {
@@ -15,27 +16,15 @@ namespace GameEngine.Camera
 
         #region Variables
 
+        // Transform
+        private Transform _transform;
+
         // Camera positionning
         protected Vector3 camUp;
-        protected Vector3 camPosition;
         protected Vector3 camTarget;
-
-        // Testing camera angles
-        private float _yaw; // Y
-        private float _pitch; // X
-        private float _roll; // Z
-
-        // Camera speeds
-        protected float camTranslationSpeed;
-        protected float camRotationSpeed;
 
         // Camera matrix
         private Matrix _projectionMatrix;
-
-        // Camera movements vectors
-        protected Vector3 cameraRotationVector;
-        protected Vector3 cameraTranslationVector;
-
         #endregion Variables
 
         #region Properties
@@ -43,7 +32,7 @@ namespace GameEngine.Camera
         {
             get 
             {
-                return Matrix.CreateLookAt(camPosition, camPosition + camTarget, camUp);
+                return Matrix.CreateLookAt(_transform.Position, _transform.Position + camTarget, camUp);
             }
         }
         public Matrix Projection 
@@ -56,46 +45,33 @@ namespace GameEngine.Camera
             {
                 _projectionMatrix = value;
             }
-        }     
-        public Vector3 EulerAngles 
-        {
-            get 
-            {
-                return new Vector3(_pitch, _yaw, _roll);
-            }
         }
+
+        public Transform Transform 
+        {
+            get { return _transform; }
+        }
+
         #endregion Properties
 
         #region Constructor
-        protected ACamera(Vector3 target, Vector3 position, Vector3 up, float translationSpeed, float rotationSpeed)
+        protected ACamera(Vector3 target, Vector3 position, Vector3 up)
         {
+            _transform = new Transform(position, Vector3.Zero, 1.0f);
+
+
             camTarget = target;
-            camPosition = position;
             camUp = up;
-            camTranslationSpeed = translationSpeed;
-            camRotationSpeed = rotationSpeed;
         }
         #endregion Constructor
 
         #region Public methods
         public virtual void Update(GameTime gameTime)
         {
-            camTarget = Vector3.Transform(Vector3.Forward, Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(_yaw),
-                                                                                         MathHelper.ToRadians(_pitch), 
-                                                                                         MathHelper.ToRadians(_roll)));
-        }
-
-        public void SetCameraRotation(Vector3 rotationVector)
-        {
-            cameraRotationVector = rotationVector * camRotationSpeed;
-            _yaw += cameraRotationVector.X;
-            _roll += cameraRotationVector.Z;
-            _pitch += cameraRotationVector.Y;
-        }
-
-        public void SetCameraTranslation(Vector3 translationVector)
-        {
-            cameraTranslationVector = translationVector * camTranslationSpeed;
+            _transform.Update();
+            camTarget = Vector3.Transform(Vector3.Forward, Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(_transform.EulerAngles.Y),
+                                                                                         MathHelper.ToRadians(_transform.EulerAngles.X),
+                                                                                         MathHelper.ToRadians(_transform.EulerAngles.Z)));
         }
         #endregion Public methods
 

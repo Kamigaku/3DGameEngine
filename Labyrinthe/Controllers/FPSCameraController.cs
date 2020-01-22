@@ -44,10 +44,10 @@ namespace Labyrinthe.Controllers
         {
             if (_moveCamera)
             {
-                Vector3 vectorMousePosition = new Vector3((GameDatas.Width / 2) - mouseState.X,
-                                                          (GameDatas.Height / 2) - mouseState.Y, 
+                Vector3 vectorMousePosition = new Vector3((GameDatas.Height / 2) - mouseState.Y,
+                                                          (GameDatas.Width / 2) - mouseState.X,
                                                           0f);
-                _assignedCamera.SetCameraRotation(vectorMousePosition);
+                _assignedCamera.Transform.SetRotationVelocity(vectorMousePosition);
                 Mouse.SetPosition(GameDatas.Width / 2, GameDatas.Height / 2);
             }
         }

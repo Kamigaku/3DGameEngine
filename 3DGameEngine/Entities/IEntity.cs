@@ -10,7 +10,6 @@ namespace GameEngine.Entities
         void Update();
         void Draw(GraphicsDevice graphicsDevice, BasicEffect effect);
         Model3D GetModel();
-        Vector3 GetPosition();
 
     }
 }

@@ -45,7 +45,7 @@ namespace Labyrinthe.Screens
             Blob bloc2 = new Blob(new Vector3(0, 0, -5), Vector3.Zero, 1f, 0, GraphicsDevice);
             GameDatas.Entities.Add(bloc2);
 
-            GameDatas.MainCamera = new FPSCamera(GraphicsDevice, mainPlayer, 0.005f, 0.005f);
+            GameDatas.MainCamera = new FPSCamera(GraphicsDevice, mainPlayer);
 
             AddInputProcessor(new PlayerController(mainPlayer));
             AddInputProcessor(new FPSCameraController(GameDatas.MainCamera));

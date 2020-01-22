@@ -20,7 +20,10 @@ namespace Labyrinthe.Entities
 
         public override void Update()
         {
-            SetRotationValues(new Vector3(0f, GameDatas.MainCamera.EulerAngles.Y, 0f));
+            Vector3 rotationVelocity = new Vector3(0f,
+                                                   GameDatas.MainCamera.Transform.EulerAngles.Y - GetModel().Transform.EulerAngles.Y,
+                                                   0f);
+            GetModel().Transform.SetRotationVelocity(rotationVelocity);
             base.Update();
         }
 

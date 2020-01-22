@@ -14,8 +14,8 @@ namespace GameEngine.Camera
     {
 
         public PerspectiveCamera(GraphicsDevice graphicsDevice, Vector3 target, Vector3 position, Vector3 up, 
-                                 float translationSpeed, float rotationSpeed, float fov = 45f, float distanceView = 1000f) 
-                                : base(target, position, up, translationSpeed, rotationSpeed)
+                                 float fov = 45f, float distanceView = 1000f) 
+                                : base(target, position, up)
         {
             Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fov), graphicsDevice.DisplayMode.AspectRatio, 0.7f, distanceView);
         }

@@ -1,9 +1,6 @@
-﻿using GameEngine.Controllers;
-using GameEngine.Entities;
-using GameEngine.Utilities;
+﻿using GameEngine.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace GameEngine.Camera
 {
@@ -15,23 +12,20 @@ namespace GameEngine.Camera
         #endregion Member fields
 
         #region Constructor
-        public FPSCamera(GraphicsDevice graphicsDevice, IEntity target, float translationSpeed, 
-                         float rotationSpeed, float fov = 45, float distanceView = 1000) 
-                        : base(graphicsDevice, Vector3.Forward, target.GetPosition(), Vector3.Up, 
-                               translationSpeed, rotationSpeed, fov, distanceView)
+        public FPSCamera(GraphicsDevice graphicsDevice, IEntity target, float fov = 45, float distanceView = 1000) 
+                        : base(graphicsDevice, Vector3.Forward, target.GetModel().Transform.Position, Vector3.Up, fov, distanceView)
         {
             _target = target;
-            camPosition = _target.GetPosition();
         }
         #endregion Constructor
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
-            camPosition = _target.GetPosition();
-
+            Vector3 camPosition = _target.GetModel().Transform.Position;
             /*camPosition.Y += 2;
             camPosition.Z += 2;*/
+            Transform.SetPosition(camPosition);
+            base.Update(gameTime);
         }
     }
 }

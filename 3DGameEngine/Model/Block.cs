@@ -25,7 +25,8 @@ namespace Labyrinthe.Model
 
         private VertexPositionColor[] _vertices;
 
-        public Block(Vector3 initialPosition, Vector3 initialRotation, float width, float height, float depth, float scaling, GraphicsDevice graphicsDevice)
+        public Block(Vector3 initialPosition, Vector3 initialRotation, float width, float height, float depth, float scaling, GraphicsDevice graphicsDevice) 
+            : base(initialPosition, initialRotation, scaling)
         {
             SetTransform(initialPosition, initialRotation, scaling);
 
@@ -68,21 +69,7 @@ namespace Labyrinthe.Model
         /// </summary>
         public override void Update()
         {
-
-            if(rotationVector != Vector3.Zero)
-            {
-                worldRotation *= Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(rotationVector.Y),
-                                                              MathHelper.ToRadians(rotationVector.X),
-                                                              MathHelper.ToRadians(rotationVector.Z));
-            }
-
-            if(translationVector != Vector3.Zero)
-            {
-                worldPosition *= Matrix.CreateTranslation((translationVector.X * -worldRotation.Right) 
-                                                        + (translationVector.Y * worldRotation.Up) 
-                                                        + (translationVector.Z * -worldRotation.Forward));
-                
-            }
+            base.Update();
         }
 
         /// <summary>
@@ -94,7 +81,7 @@ namespace Labyrinthe.Model
         {
             graphicsDevice.SetVertexBuffer(vertexBuffer);
             //graphicsDevice.Indices = indexBuffer;
-            effect.World = World;
+            effect.World = Transform.World;
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();

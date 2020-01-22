@@ -27,11 +27,6 @@ namespace GameEngine.Entities
             return _model;
         }
 
-        public Vector3 GetPosition()
-        {
-            return _model.Position;
-        }
-
         public virtual void Update() 
         {
             _model.Update();

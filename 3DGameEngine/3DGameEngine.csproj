@@ -46,9 +46,12 @@
     <Compile Include="Camera\ACamera.cs" />
     <Compile Include="Camera\FPSCamera.cs" />
     <Compile Include="Camera\PerspectiveCamera.cs" />
+    <Compile Include="Datas\EngineDatas.cs" />
     <Compile Include="Entities\AEntity.cs" />
-    <Compile Include="Entities\MoveableEntity.cs" />
+    <Compile Include="Entities\CollidableEntity.cs" />
     <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Entities\MoveableEntity.cs" />
+    <Compile Include="Geometry\Collider.cs" />
     <Compile Include="Geometry\Transform.cs" />
     <Compile Include="Input\GameInput.cs" />
     <Compile Include="Logging\Logger.cs" />

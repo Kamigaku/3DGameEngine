@@ -22,8 +22,8 @@ namespace GameEngine.Camera
         public override void Update(GameTime gameTime)
         {
             Vector3 camPosition = _target.GetModel().Transform.Position;
-            /*camPosition.Y += 2;
-            camPosition.Z += 2;*/
+            camPosition.Y += 2;
+            camPosition.Z += 2;
             Transform.SetPosition(camPosition);
             base.Update(gameTime);
         }

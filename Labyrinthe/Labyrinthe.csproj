@@ -44,7 +44,6 @@
     <Compile Include="Controllers\FPSCameraController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Datas\GameDatas.cs" />
-    <Compile Include="Entities\Blob.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Launcher.cs" />
     <Compile Include="Workers\GraphicsWorker.cs" />
@@ -70,9 +69,7 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\3DGameEngine\3DGameEngine.csproj">
       <Project>{B9B9E039-E0CA-45EE-B047-C8D56D371A6E}</Project>

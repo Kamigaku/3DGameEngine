@@ -1,4 +1,5 @@
 ﻿using GameEngine.Utilities;
+using Labyrinthe.Model;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -52,7 +53,7 @@ namespace TestProject
             /*Console.WriteLine("---------------------");
         }*/
 
-            Vector3 target = Vector3.Forward;
+            /*Vector3 target = Vector3.Forward;
             Console.WriteLine(target);
             target = Vector3.Transform(target, Matrix.CreateFromAxisAngle(Vector3.Up, MathHelper.ToRadians(90f))); // Rotate around Y
             target = Vector3.Transform(target, Matrix.CreateFromAxisAngle(Vector3.Forward, MathHelper.ToRadians(90f))); // Rotate around Z
@@ -69,7 +70,7 @@ namespace TestProject
             target = Vector3.Forward;
             Console.WriteLine(target);
             target = Vector3.Transform(target, Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(90f), MathHelper.ToRadians(0), MathHelper.ToRadians(0)));
-            Console.WriteLine(target);
+            Console.WriteLine(target);*/
 
 
             /*lookAt_1.Decompose(out scaleDecompose, out quat, out translationDecompose);
@@ -116,7 +117,39 @@ namespace TestProject
             Console.WriteLine(add);*/
 
             /*using (var game = new Game1())
-                game.Run();*/
+                game.Run();
+
+            Block b1 = new Block(Vector3.Zero, Vector3.Zero, 1, 1, 1, 1, null);
+            Block b2 = new Block(new Vector3(0, 0, 5), Vector3.Zero, 1, 1, 1, 1, null);
+            Block b3 = new Block(new Vector3(0, 0, -5), Vector3.Zero, 1, 1, 1, 1, null);
+
+
+            Console.WriteLine(b1.Difference(b2));
+            Console.WriteLine(b1.Difference(b3));*/
+
+            /*Matrix m1 = Matrix.Identity;
+            m1 *= Matrix.CreateTranslation(0, 0, -1);
+            m1 *= Matrix.CreateTranslation(0, 0, -1);
+            Console.WriteLine(m1.Translation);*/
+
+            Vector3 playerPosition = new Vector3(-0.5000104f, 0, -3.99617f);
+            Vector3 destinationPosition = new Vector3(0, 0, -5);
+
+            Vector3 directionVector = new Vector3(destinationPosition.X - playerPosition.X,
+                                                  destinationPosition.Y - playerPosition.Y,
+                                                  destinationPosition.Z - playerPosition.Z);
+
+            BoundingBox box = new BoundingBox(new Vector3(destinationPosition.X - 0.5f, destinationPosition.Y - 0.5f, destinationPosition.Z - 0.5f),
+                                              new Vector3(destinationPosition.X + 0.5f, destinationPosition.Y + 0.5f, destinationPosition.Z + 0.5f));
+
+            Ray ray = new Ray(playerPosition, directionVector);
+            float? distance = null;
+            if((distance = ray.Intersects(box)) != null)
+            {
+                Console.WriteLine(distance);
+            }
+
+
         }
 
         public static Vector2 CreateRotation(Vector2 origin, Vector2 destination, float radians)

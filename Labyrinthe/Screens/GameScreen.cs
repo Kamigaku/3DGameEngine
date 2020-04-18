@@ -1,4 +1,5 @@
 ﻿using GameEngine.Camera;
+using GameEngine.Entities;
 using GameEngine.Model;
 using Labyrinthe.Controllers;
 using Labyrinthe.Datas;
@@ -38,16 +39,34 @@ namespace Labyrinthe.Screens
             base.Initialize();
             _graphicsWorker.Initialize();
 
-            Blob bloc = new Blob(new Vector3(0, 0, 5), Vector3.Zero, 1f, 0, GraphicsDevice);
+            /*AEntity bloc = new Blob(new Vector3(0, 0, 5), Vector3.Zero, 1f, GraphicsDevice);
+            bloc = ComponentFactory.AddCollision(bloc, 1, 1, 1);
             GameDatas.Entities.Add(bloc);
-            Player mainPlayer = new Player(Vector3.Zero, Vector3.Zero, 1f, 0.05f, GraphicsDevice);
+
+            AEntity mainPlayer = new Player(Vector3.Zero, Vector3.Zero, 1f, GraphicsDevice);
+            mainPlayer = ComponentFactory.AddCollision(mainPlayer, 1, 1, 1);
+            mainPlayer = ComponentFactory.AddMovement(mainPlayer, 0.05f, 0.05f);
             GameDatas.Entities.Add(mainPlayer);
-            Blob bloc2 = new Blob(new Vector3(0, 0, -5), Vector3.Zero, 1f, 0, GraphicsDevice);
+
+            AEntity bloc2 = new Blob(new Vector3(0, 0, -5), Vector3.Zero, 1f, GraphicsDevice);
+            bloc2 = ComponentFactory.AddCollision(bloc2, 1, 1, 1);
+            GameDatas.Entities.Add(bloc2);*/
+
+            AEntity bloc1 = new CollidableEntity(new Block(new Vector3(0, 0, 5), Vector3.Zero, 1, 1, 1, 1, GraphicsDevice), 
+                                                 1, 1, 1);
+            GameDatas.Entities.Add(bloc1);
+
+            AEntity mainPlayer = new Player(new Block(new Vector3(0, 0, 0), Vector3.Zero, 1, 1, 1, 1, GraphicsDevice), 
+                                                    1, 1, 1, new Vector3(0.05f), new Vector3(1f));
+            GameDatas.Entities.Add(mainPlayer);
+
+            AEntity bloc2 = new CollidableEntity(new Block(new Vector3(0, 0, -5), Vector3.Zero, 1, 1, 1, 1, GraphicsDevice),
+                                                 1, 1, 1);
             GameDatas.Entities.Add(bloc2);
 
             GameDatas.MainCamera = new FPSCamera(GraphicsDevice, mainPlayer);
 
-            AddInputProcessor(new PlayerController(mainPlayer));
+            AddInputProcessor(new PlayerController((MoveableEntity)mainPlayer));
             AddInputProcessor(new FPSCameraController(GameDatas.MainCamera));
 
             //new Labyrinthe.World.World();

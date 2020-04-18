@@ -25,7 +25,7 @@ namespace Labyrinthe.Model
 
         private VertexPositionColor[] _vertices;
 
-        public Block(Vector3 initialPosition, Vector3 initialRotation, float width, float height, float depth, float scaling, GraphicsDevice graphicsDevice) 
+        public Block(Vector3 initialPosition, Vector3 initialRotation, float scaling, float width, float height, float depth, GraphicsDevice graphicsDevice)
             : base(initialPosition, initialRotation, scaling)
         {
             SetTransform(initialPosition, initialRotation, scaling);
@@ -34,6 +34,7 @@ namespace Labyrinthe.Model
             _height = height;
             _depth = depth;
 
+            if (graphicsDevice != null) {
             vertexBuffer = new VertexBuffer(graphicsDevice, typeof(VertexPositionColor), 14, BufferUsage.WriteOnly);
             indexBuffer = new IndexBuffer(graphicsDevice, IndexElementSize.ThirtyTwoBits, INDICES.Length, BufferUsage.WriteOnly);
 
@@ -41,25 +42,26 @@ namespace Labyrinthe.Model
 
             indexBuffer.SetData(INDICES);
         }
+        }
 
         private void CreateBlock()
         {
             _vertices = new VertexPositionColor[]
             {
-                new VertexPositionColor(new Vector3(-_width / 2,  _height /2,  _depth / 2), Color.Green), // Front-top-left
-                new VertexPositionColor(new Vector3( _width / 2,  _height /2,  _depth / 2), Color.Green), // Front-top-right
-                new VertexPositionColor(new Vector3(-_width / 2, -_height /2,  _depth / 2), Color.Green), // Front-bottom-left
-                new VertexPositionColor(new Vector3( _width / 2, -_height /2,  _depth / 2), Color.Green), // Front-bottom-right
-                new VertexPositionColor(new Vector3( _width / 2, -_height /2, -_depth / 2), Color.Red), // Back-bottom-right
-                new VertexPositionColor(new Vector3( _width / 2,  _height /2,  _depth / 2), Color.Red), // Front-top-right
-                new VertexPositionColor(new Vector3( _width / 2,  _height /2, -_depth / 2), Color.Red), // Back-top-right
-                new VertexPositionColor(new Vector3(-_width / 2,  _height /2,  _depth / 2), Color.Red), // Front-top-left
-                new VertexPositionColor(new Vector3(-_width / 2,  _height /2, -_depth / 2), Color.Red), // Back-top-left
-                new VertexPositionColor(new Vector3(-_width / 2, -_height /2,  _depth / 2), Color.Red), // Front-bottom-left
-                new VertexPositionColor(new Vector3(-_width / 2, -_height /2, -_depth / 2), Color.Red), // Back-bottom-left
-                new VertexPositionColor(new Vector3( _width / 2, -_height /2, -_depth / 2), Color.Red), // Back-bottom-right
-                new VertexPositionColor(new Vector3(-_width / 2,  _height /2, -_depth / 2), Color.Red), // Back-top-left
-                new VertexPositionColor(new Vector3( _width / 2,  _height /2, -_depth / 2), Color.Red)  // Back-top-right
+                new VertexPositionColor(new Vector3(-_width / 2,  _height / 2,  _depth / 2), Color.Green), // Front-top-left
+                new VertexPositionColor(new Vector3( _width / 2,  _height / 2,  _depth / 2), Color.Green), // Front-top-right
+                new VertexPositionColor(new Vector3(-_width / 2, -_height / 2,  _depth / 2), Color.Green), // Front-bottom-left
+                new VertexPositionColor(new Vector3( _width / 2, -_height / 2,  _depth / 2), Color.Green), // Front-bottom-right
+                new VertexPositionColor(new Vector3( _width / 2, -_height / 2, -_depth / 2), Color.Red), // Back-bottom-right
+                new VertexPositionColor(new Vector3( _width / 2,  _height / 2,  _depth / 2), Color.Red), // Front-top-right
+                new VertexPositionColor(new Vector3( _width / 2,  _height / 2, -_depth / 2), Color.Red), // Back-top-right
+                new VertexPositionColor(new Vector3(-_width / 2,  _height / 2,  _depth / 2), Color.Red), // Front-top-left
+                new VertexPositionColor(new Vector3(-_width / 2,  _height / 2, -_depth / 2), Color.Red), // Back-top-left
+                new VertexPositionColor(new Vector3(-_width / 2, -_height / 2,  _depth / 2), Color.Red), // Front-bottom-left
+                new VertexPositionColor(new Vector3(-_width / 2, -_height / 2, -_depth / 2), Color.Red), // Back-bottom-left
+                new VertexPositionColor(new Vector3( _width / 2, -_height / 2, -_depth / 2), Color.Red), // Back-bottom-right
+                new VertexPositionColor(new Vector3(-_width / 2,  _height / 2, -_depth / 2), Color.Red), // Back-top-left
+                new VertexPositionColor(new Vector3( _width / 2,  _height / 2, -_depth / 2), Color.Red)  // Back-top-right
             };
             vertexBuffer.SetData(_vertices);
         }
@@ -87,6 +89,22 @@ namespace Labyrinthe.Model
                 pass.Apply();
                 graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, _vertices, 0, _vertices.Length - 2);
             }
+        }
+
+        public override Vector3 Difference(Model3D otherModel)
+        {
+            Vector3 v = new Vector3(Transform.Position.X - otherModel.Transform.Position.X, 
+                                    Transform.Position.Y - otherModel.Transform.Position.Y, 
+                                    Transform.Position.Z - otherModel.Transform.Position.Z);
+            if(Transform.Position.X < otherModel.Transform.Position.X)
+            {
+
+            }
+            else
+            {
+
+            }
+            return v;
         }
     }
 }

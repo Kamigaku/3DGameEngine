@@ -64,6 +64,12 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\3DGameEngine\3DGameEngine.csproj">
+      <Project>{B9B9E039-E0CA-45EE-B047-C8D56D371A6E}</Project>
+      <Name>3DGameEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

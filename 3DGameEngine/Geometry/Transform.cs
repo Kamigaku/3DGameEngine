@@ -31,6 +31,10 @@ namespace GameEngine.Geometry
         #endregion Member fields
 
         #region Properties
+        public Vector3 TranslationVelocity 
+        {
+            get { return _translationVelocity; }
+        }
 
         public Matrix World 
         {
@@ -156,23 +160,33 @@ namespace GameEngine.Geometry
         {
             if (_rotationVelocity != Vector3.Zero)
             {
-                //Console.WriteLine(_rotationVelocity);
-                _rotation *= Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(_rotationVelocity.Y),
-                                                           MathHelper.ToRadians(_rotationVelocity.X),
-                                                           MathHelper.ToRadians(_rotationVelocity.Z));
+                _rotation = SimulateRotation();
             }
 
             if(_translationVelocity != Vector3.Zero)
             {
-                _translation *= Matrix.CreateTranslation((_translationVelocity.X * _rotation.Left) +
-                                                         (_translationVelocity.Y * _rotation.Up) +
-                                                         (_translationVelocity.Z * _rotation.Forward));
-                /*Logging.Logger.Debug("" + _translationVelocity);
-                Logging.Logger.Debug("Left: " + _rotation.Left + " / Up: " + _rotation.Up + " / Forward: " + _rotation.Forward);
-                Logging.Logger.Debug("Result: " + ((_translationVelocity.X * _rotation.Left) +
-                                                         (_translationVelocity.Y * _rotation.Up) +
-                                                         (_translationVelocity.Z * _rotation.Forward)));*/
+                _translation = SimulateTranslation(_translationVelocity);
             }
+        }
+
+        public Matrix SimulateTranslation(Vector3 translationVector)
+        {
+            //return _translation * Matrix.CreateTranslation(SimulatePosition(translationVector));
+            return _translation * Matrix.CreateTranslation(translationVector);
+        }
+
+        public Matrix SimulateRotation()
+        {
+            return _rotation * Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(_rotationVelocity.Y), 
+                                                             MathHelper.ToRadians(_rotationVelocity.X),
+                                                             MathHelper.ToRadians(_rotationVelocity.Z));
+        }
+
+        public Vector3 SimulatePosition(Vector3 translationVector)
+        {
+            return (translationVector.X * _rotation.Left) 
+                    + (translationVector.Y * _rotation.Up) 
+                    + (translationVector.Z * _rotation.Forward);
         }
 
         #endregion Public methods

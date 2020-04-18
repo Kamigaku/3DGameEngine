@@ -68,6 +68,11 @@ namespace GameEngine.Model
         /// <param name="graphicsDevice">The graphic device that will render the model</param>
         /// <param name="effect">The effect that will be used to render the model</param>
         public virtual void Draw(GraphicsDevice graphicsDevice, BasicEffect effect) {}
+
+        public virtual Vector3 Difference(Model3D otherModel) 
+        { 
+            return Vector3.Zero; 
+        }
         #endregion Methods
     }
 }

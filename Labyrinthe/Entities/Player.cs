@@ -1,37 +1,29 @@
-﻿using GameEngine.Camera;
-using GameEngine.Entities;
-using GameEngine.Logging;
-using GameEngine.Utilities;
+﻿using GameEngine.Entities;
+using GameEngine.Model;
 using Labyrinthe.Datas;
-using Labyrinthe.Model;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Labyrinthe.Entities
 {
+
+    // L'utilité de cette classe est à remettre en cause. Elle se contente uniquement de faire tourner le personnage "joueur" en fonction
+    // de l'orientation de la caméra
     public class Player : MoveableEntity
     {
-
-        public Player(Vector3 position, Vector3 rotation, float scaling, float entitySpeed, GraphicsDevice graphicsDevice) 
-            : base(entitySpeed, new Block(position, rotation, 1, 1, 1, scaling, graphicsDevice))
-        {
-        }
+        public Player(Model3D model, float width, float height, float depth, Vector3 translationVelocity, Vector3 angularVelocity) 
+            : base(model, width, height, depth, translationVelocity, angularVelocity) {}
 
         public override void Update()
         {
-            Vector3 rotationVelocity = new Vector3(0f,
-                                                   GameDatas.MainCamera.Transform.EulerAngles.Y - GetModel().Transform.EulerAngles.Y,
-                                                   0f);
-            GetModel().Transform.SetRotationVelocity(rotationVelocity);
+            SetRotationVector(new Vector3(0f,
+                                          GameDatas.MainCamera.Transform.EulerAngles.Y - GetModel().Transform.EulerAngles.Y,
+                                          0f));
             base.Update();
-        }
-
-        public override void Draw(GraphicsDevice graphicsDevice, BasicEffect effect)
-        {
-            effect.Projection = GameDatas.MainCamera.Projection;
-            effect.View = GameDatas.MainCamera.View;
-            GetModel().Draw(graphicsDevice, effect);
         }
     }
 }
